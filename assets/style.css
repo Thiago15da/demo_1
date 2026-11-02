@@ -448,3 +448,11 @@ body[data-page="proyectos"] .project-info>button:after{content:"";display:none}
  *,*:before,*:after{animation-duration:.001ms!important;animation-delay:0ms!important;transition-duration:.001ms!important;scroll-behavior:auto!important}
  #opening{display:none!important}
 }
+/* Focus access without ever exposing the skip link in ordinary screenshots. */
+.skip{top:0;transform:translateY(-170%);opacity:0;pointer-events:none;transition:transform .15s,opacity .15s}
+.skip:focus-visible{top:0;transform:none;opacity:1;pointer-events:auto}
+/* One branded accent from MCA's existing identity, interpreted for the redesign. */
+.origin-logo{display:flex;align-items:center;gap:14px;border-top:1px solid #cad4ce;padding-top:21px;margin-top:26px}
+.origin-logo img{height:43px;width:auto;max-width:129px;object-fit:contain}
+.origin-logo span{font:500 9px/1.75 var(--mono);letter-spacing:.04em;text-transform:uppercase;color:#798b8a}
+@media(max-width:520px){.origin-logo img{height:31px;max-width:94px}.origin-logo span{font-size:8px}}
