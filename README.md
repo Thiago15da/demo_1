@@ -10,6 +10,14 @@ Este repositorio contiene dos experiencias institucionales coherentes, desarroll
 - `servicios-smart.html`: presentación comercial independiente de Servicios Smart, complementaria a MCA.
 - `contacto.html`: formulario comercial diferenciado para inversiones, proyectos industriales, ingeniería, montajes y mantenimiento.
 
+## Dirección de arte v2 (2026-11-02)
+
+- Diseño institucional editorial propio para MCA: marfil mineral, azul pizarra, cobre y tipografía Manrope / Instrument Serif. Se prioriza la calidad de composición y casos industriales en lugar de módulos de plantilla.
+- Servicios Smart conserva un tratamiento técnico diferenciado (azul profundo y verde marino).
+- Se incorpora el logotipo **original publicado por MCA** como referencia explícita de identidad en la propuesta (no se afirma que el concepto nuevo esté aprobado).
+- Fotografías críticas empaquetadas en `assets/media/` para evitar dependencias externas; el único archivo de proyecto atribuido directamente a MCA es `assets/media/park-parana.jpg`. Las demás fotografías de Unsplash se presentan como ilustrativas, no como trabajos MCA.
+- La página puede mostrarse incluso si no se ejecutan las animaciones; el contenido no queda oculto durante desplazamientos.
+
 ## Funcionalidad de demostración
 - Animación de entrada, navegación adaptativa y respetuosa con reducción de movimiento.
 - Catálogo de proyectos editable mediante `assets/projects.json`.
@@ -26,7 +34,7 @@ Este repositorio contiene dos experiencias institucionales coherentes, desarroll
 - [MCA — Contacto](https://www.mcaconstructora.com/contact): **+595981876316**, correo **camaidana@mcapy.solutions**, dirección **San Francisco 1131 c/ Concordia, Asunción**.
 - Servicios Smart y el nuevo posicionamiento de MCA proceden directamente del documento de requerimientos que compartió el usuario. **No se han encontrado testimonios, portafolio Smart o datos de contacto independientes que permitan afirmar resultados, proyectos ejecutados o una unidad jurídica específica.**
 
-Imágenes: las fotografías de proyectos enlazadas desde `static.wixstatic.com` corresponden a medios que aparecen en las páginas públicas de MCA; si fallan se usan fotografías de **Unsplash** como referencias. Antes de publicar oficialmente, confirmar licencias, fotografías auténticas, etapas, superficies, logos y permisos para reutilizar imágenes.
+Imágenes: el medio de `Parque Paraná` y el logo actual proceden de la web pública MCA; las fotografías de los demás casos proceden de **Unsplash** como material de referencia. Los recursos están empaquetados localmente. Antes de publicar oficialmente, confirmar licencias, fotografías auténticas, etapas, superficies, logos y permisos para reutilizar imágenes.
 
 ## Mantenimiento y carga de proyectos
 Editar `assets/projects.json`: cada objeto contiene `title`, `category`, `location`, `area`, `description`, `scope`, `status`, `image`, `fallback`, `source`. La interfaz consulta automáticamente este archivo cuando se abre `proyectos.html` o `index.html`.
