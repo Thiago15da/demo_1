@@ -70,7 +70,7 @@ await check('Proyectos: ficha y fuente abren y cierran',async()=>{
 });
 const smart=await newPage('servicios-smart.html');
 await check('Servicios Smart: identidad diferenciada y seis capacidades',async()=>{
- assert.match(await smart.locator('h1').innerText(),/operación/i);
+ assert.match(await smart.locator('h1').innerText(),/operativa/i);
  assert.equal(await smart.locator('.smart-feature').count(),6);
  assert.match(await smart.locator('.header .brand-name').innerText(),/SMART/);
  assert.match(await smart.locator('body').innerText(),/Mantenimiento industrial/i);
@@ -128,6 +128,11 @@ await check('Móvil: sin scroll lateral 320, 390, 768, 1440',async()=>{
   assert.ok(v.scroll<=v.w+2,JSON.stringify(v));
  }
  await mobile.setViewportSize({width:390,height:844});
+});
+await check('Fotografías críticas disponibles desde el propio repositorio',async()=>{
+ for(const src of ['assets/media/industrial-detail.jpg','assets/media/park-parana.jpg','assets/media/smart-people.jpg','assets/media/smart-machinery.jpg']){
+  const response=await mobile.request.get(origin+src);assert.equal(response.status(),200,src);assert.ok(Number(response.headers()['content-length']||0)>3000,src);
+ }
 });
 await check('Sin errores de JavaScript',async()=>assert.deepEqual(pageErrors,[]));
 await mobile.goto(origin+'index.html',{waitUntil:'domcontentloaded'});
