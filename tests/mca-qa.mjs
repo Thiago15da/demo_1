@@ -112,6 +112,7 @@ await home.goto(origin+'index.html',{waitUntil:'domcontentloaded'});
 await home.waitForTimeout(3300);
 await home.evaluate(async()=>{for(let y=0;y<document.documentElement.scrollHeight;y+=580){scrollTo(0,y);await new Promise(r=>setTimeout(r,32))}scrollTo({top:0,behavior:'instant'})});
 await home.waitForTimeout(450);
+await home.locator('.project-card img').evaluateAll(imgs=>Promise.all(imgs.map(img=>img.decode().catch(()=>{}))));
 await home.screenshot({path:'test-results/mca-desktop.png',fullPage:true,animations:'disabled'});
 
 const mobile=await newPage('index.html',390,844,true);
@@ -192,7 +193,9 @@ await mobile.goto(origin+'index.html',{waitUntil:'domcontentloaded'});
 await mobile.waitForTimeout(3400);
 await mobile.evaluate(async()=>{for(let y=0;y<document.documentElement.scrollHeight;y+=430){scrollTo(0,y);await new Promise(r=>setTimeout(r,34))}scrollTo({top:0,behavior:'instant'})});
 await mobile.waitForTimeout(450);
+await mobile.locator('.project-card img').evaluateAll(imgs=>Promise.all(imgs.map(img=>img.decode().catch(()=>{}))));
 await mobile.screenshot({path:'test-results/mca-mobile.png',fullPage:true,animations:'disabled'});
+await smart.locator('.smart-showcase-photo img').evaluate(img=>img.decode().catch(()=>{}));
 await smart.screenshot({path:'test-results/smart-desktop.png',fullPage:true,animations:'disabled'});
 await browser.close();
 console.log(passed+'/'+(passed+failures.length)+' pruebas aprobadas');
