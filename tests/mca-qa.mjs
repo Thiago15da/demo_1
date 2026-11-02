@@ -112,6 +112,7 @@ await home.goto(origin+'index.html',{waitUntil:'domcontentloaded'});
 await home.waitForTimeout(3300);
 await home.evaluate(async()=>{for(let y=0;y<document.documentElement.scrollHeight;y+=580){scrollTo(0,y);await new Promise(r=>setTimeout(r,32))}scrollTo({top:0,behavior:'instant'})});
 await home.waitForTimeout(450);
+await home.locator('.project-card img').evaluateAll(imgs=>Promise.all(imgs.map(img=>img.decode().catch(()=>{}))));
 await home.screenshot({path:'test-results/mca-desktop.png',fullPage:true,animations:'disabled'});
 
 const mobile=await newPage('index.html',390,844,true);
@@ -141,12 +142,60 @@ await check('Fotografías críticas disponibles desde el propio repositorio',asy
   const response=await mobile.request.get(origin+src);assert.equal(response.status(),200,src);assert.ok(Number(response.headers()['content-length']||0)>3000,src);
  }
 });
+await check('Ninguna página desborda o recorta sus títulos de 320 a 1600 px',async()=>{
+ for(const slug of ['index.html','parques-industriales.html','proyectos.html','servicios-smart.html','contacto.html']){
+  const page=await newPage(slug,390,820);
+  await page.waitForTimeout(180);
+  for(const width of [320,390,768,1024,1440,1600]){
+   await page.setViewportSize({width,height:880});
+   const x=await page.evaluate(()=>{
+    const headings=[...document.querySelectorAll('h1,h2,h3')].filter(el=>{
+      const s=getComputedStyle(el),r=el.getBoundingClientRect();return s.display!=='none'&&s.visibility!=='hidden'&&r.height>0;
+    });
+    return {vw:innerWidth,doc:document.documentElement.scrollWidth,headings:headings.map(el=>{const r=el.getBoundingClientRect();const parent=el.parentElement.getBoundingClientRect();return {label:el.innerText.slice(0,28),x:r.x,right:r.right,client:el.clientWidth,scroll:el.scrollWidth,parentWidth:parent.width}}),brand:document.querySelector('.header .brand-asset')?.getBoundingClientRect().width,opening:document.querySelectorAll('#opening').length};
+   });
+   assert.ok(x.doc<=x.vw+2,slug+' '+width+'px: scroll '+JSON.stringify(x));
+   assert.equal(x.opening,0,slug+' intro overlay');
+   if(slug!=='servicios-smart.html')assert.ok(x.brand>30&&x.brand<=95,slug+' logo demasiado grande: '+x.brand);
+   for(const h of x.headings){
+    assert.ok(h.x>=-3&&h.right<=width+3,slug+' '+width+' título fuera del viewport: '+JSON.stringify(h));
+    assert.ok(h.scroll<=h.client+4,slug+' '+width+' título recortado: '+JSON.stringify(h));
+   }
+  }
+  await page.close();
+ }
+});
+await check('Portada y fichas usan fotografías locales que cargan',async()=>{
+ await home.goto(origin+'index.html',{waitUntil:'domcontentloaded'});
+ await home.locator('.project-card').first().waitFor();
+ for(const sel of ['.header .brand-asset','.hero-media img','.park-feature-media img','.smart-showcase-photo img','.project-card img']){
+  const el=home.locator(sel).first();await el.scrollIntoViewIfNeeded();
+  await el.evaluate(img=>img.decode().catch(()=>{}));
+  assert.ok(await el.evaluate(img=>img.complete&&img.naturalWidth>0),'Imagen sin cargar: '+sel);
+ }
+});
+await check('Todas las fotografías del portafolio y Smart se muestran sin recuadros vacíos',async()=>{
+ for(const [page,selector] of [[home,'.project-card img'],[projects,'.project-card img'],[smart,'.smart-showcase-photo img']]){
+  if(page===home)await home.goto(origin+'index.html',{waitUntil:'domcontentloaded'});
+  await page.locator(selector).first().waitFor({timeout:10000});
+  const images=page.locator(selector);
+  for(let i=0;i<await images.count();i++){
+    const el=images.nth(i);
+    await el.scrollIntoViewIfNeeded();
+    await el.evaluate(img=>img.decode().catch(()=>{}));
+    const info=await el.evaluate(img=>({loaded:img.complete&&img.naturalWidth>0,src:img.getAttribute('src')}));
+    assert.ok(info.loaded,JSON.stringify(info));
+  }
+ }
+});
 await check('Sin errores de JavaScript',async()=>assert.deepEqual(pageErrors,[]));
 await mobile.goto(origin+'index.html',{waitUntil:'domcontentloaded'});
 await mobile.waitForTimeout(3400);
 await mobile.evaluate(async()=>{for(let y=0;y<document.documentElement.scrollHeight;y+=430){scrollTo(0,y);await new Promise(r=>setTimeout(r,34))}scrollTo({top:0,behavior:'instant'})});
 await mobile.waitForTimeout(450);
+await mobile.locator('.project-card img').evaluateAll(imgs=>Promise.all(imgs.map(img=>img.decode().catch(()=>{}))));
 await mobile.screenshot({path:'test-results/mca-mobile.png',fullPage:true,animations:'disabled'});
+await smart.locator('.smart-showcase-photo img').evaluate(img=>img.decode().catch(()=>{}));
 await smart.screenshot({path:'test-results/smart-desktop.png',fullPage:true,animations:'disabled'});
 await browser.close();
 console.log(passed+'/'+(passed+failures.length)+' pruebas aprobadas');

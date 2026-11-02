@@ -19,7 +19,7 @@ Este repositorio contiene dos experiencias institucionales coherentes, desarroll
 - La página puede mostrarse incluso si no se ejecutan las animaciones; el contenido no queda oculto durante desplazamientos.
 
 ## Funcionalidad de demostración
-- Animación de entrada, navegación adaptativa y respetuosa con reducción de movimiento.
+- Navegación sencilla y encabezado fijo en el flujo de la página; sin animación de entrada ni logotipo sobredimensionado.
 - Catálogo de proyectos editable mediante `assets/projects.json`.
 - Masterplan ilustrativo interactivo con 6 sectores ficticios y selección accesible por teclado.
 - Formularios comerciales sin backend: los botones preparan mensajes por WhatsApp (`+595981876316`) y correo (`camaidana@mcapy.solutions`) en el equipo del usuario. **No se envían automáticamente ni se guardan datos.**
@@ -53,3 +53,9 @@ La acción `.github/workflows/mca-qa.yml` ejecuta Playwright Chromium: navegaci�
 
 ## Resguardo
 La demo anterior del Centro Educativo de las Américas se preserva en la rama `backup/cela-before-mca-2026-11-02`.
+
+## Corrección de coherencia visual — 2 de noviembre de 2026
+
+La revisión de diseño redujo el sistema a **una familia tipográfica principal**, colores corporativos sobrios, grillas simples, espacios y tamaños consistentes, imágenes sin carga diferida en el portafolio y **logotipo original MCA pequeño** en el encabezado. Se eliminaron las cortinas de entrada y los grandes títulos decorativos que generaban problemas de superposición.
+
+La publicación añade un identificador de versión a CSS y JavaScript para evitar que el navegador mezcle el HTML nuevo con estilos antiguos almacenados en caché. Se comprobaron las cinco páginas en anchos de 320, 390, 768, 1024, 1440 y 1600 píxeles, además de la navegación, filtros, masterplan y enlaces comerciales.

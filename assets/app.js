@@ -74,7 +74,7 @@ async function loadProjects(){
       for(const p of projects){
         const card=document.createElement('article');card.className='project-card';
         const photo=document.createElement('div');photo.className='project-image';
-        const img=document.createElement('img');img.loading='lazy';img.src=p.image||p.fallback;img.dataset.fallback=p.fallback||'';img.alt='Imagen de referencia del proyecto '+p.title;
+        const img=document.createElement('img');img.loading='eager'; img.decoding='async';img.src=p.image||p.fallback;img.dataset.fallback=p.fallback||'';img.alt='Imagen de referencia del proyecto '+p.title;
         const tag=document.createElement('span');tag.textContent=p.categoryLabel;
         photo.append(img,tag);
         const box=document.createElement('div');box.className='project-info';
