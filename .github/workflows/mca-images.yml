@@ -1,0 +1,68 @@
+name: MCA - Prepare reliable local imagery
+
+on:
+  push:
+    paths:
+      - ".github/workflows/mca-images.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  media:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Download and validate publicly sourced visual references
+        run: |
+          set -e
+          mkdir -p assets/media
+          python3 - <<'PY'
+          from urllib.request import Request, urlopen
+          from pathlib import Path
+          from time import sleep
+          imports = {
+            "hero-industrial.jpg":"https://images.unsplash.com/photo-1565793298595-6ba897a9b3ea?auto=format&fit=crop&w=1600&q=85",
+            "industrial-detail.jpg":"https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1600&q=85",
+            "smart-people.jpg":"https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=1600&q=85",
+            "smart-machinery.jpg":"https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?auto=format&fit=crop&w=1600&q=85",
+            "park-parana.jpg":"https://static.wixstatic.com/media/9d7382_07659245b25547328bdb84282cca1b8a~mv2.jpg",
+            "mca-official-logo.png":"https://static.wixstatic.com/media/9d7382_76d2e895ea724f23b3205c7b3a625de0~mv2.png",
+            "luque-illustrative.jpg":"https://images.unsplash.com/photo-1565793298595-6ba897a9b3ea?auto=format&fit=crop&w=1300&q=80",
+            "mra-illustrative.jpg":"https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1300&q=80",
+            "plant-illustrative.jpg":"https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=1300&q=80"
+          }
+          for name,url in imports.items():
+              success=False
+              for attempt in range(3):
+                  try:
+                      with urlopen(Request(url,headers={"User-Agent":"Mozilla/5.0 (compatible; NovaTecDemo/1.0)"}),timeout=25) as resp:
+                          content=resp.read(8*1024*1024)
+                          kind=resp.headers.get("Content-Type","")
+                      if len(content)<2000 or ("image/" not in kind and content[:2]!=b'\xff\xd8' and not content.startswith(b'\x89PNG')):
+                          raise ValueError("Unexpected response: "+kind+" / "+str(len(content)))
+                      Path("assets/media",name).write_bytes(content)
+                      print("OK",name,len(content),kind)
+                      success=True
+                      break
+                  except Exception as exc:
+                      print("Attempt failed",name,str(exc))
+                      sleep(1)
+              if not success: print("SKIPPED",name)
+          PY
+      - name: Persist self-hosted images on feature branch
+        run: |
+          git config user.name "NovaTec Demo CI"
+          git config user.email "noreply@users.noreply.github.com"
+          git add assets/media
+          if ! git diff --cached --quiet; then
+            git commit -m "assets: bundle licensed illustration photos and MCA source imagery"
+            git push origin HEAD:feature/mca-art-direction-v2
+          fi
+      - name: Report packaged media
+        run: |
+          ls -lh assets/media
