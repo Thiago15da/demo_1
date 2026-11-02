@@ -18,6 +18,7 @@ async function newPage(url,width=1440,height=900,mobile=false){
 }
 const home=await newPage('index.html');
 await home.waitForTimeout(3500);
+await home.screenshot({path:'test-results/mca-desktop-first-impression.png',fullPage:false,animations:'disabled'});
 await check('MCA: identidad industrial y apertura se desmonta',async()=>{
  assert.match(await home.title(),/MCA.*Desarrollo industrial/i);
  assert.match(await home.locator('h1').innerText(),/industria/i);
@@ -109,11 +110,13 @@ await check('Todas las páginas internas responden',async()=>{
 });
 await home.goto(origin+'index.html',{waitUntil:'domcontentloaded'});
 await home.waitForTimeout(3300);
-await home.evaluate(async()=>{for(let y=0;y<document.documentElement.scrollHeight;y+=580){scrollTo(0,y);await new Promise(r=>setTimeout(r,32))}scrollTo(0,0)});
+await home.evaluate(async()=>{for(let y=0;y<document.documentElement.scrollHeight;y+=580){scrollTo(0,y);await new Promise(r=>setTimeout(r,32))}scrollTo({top:0,behavior:'instant'})});
+await home.waitForTimeout(450);
 await home.screenshot({path:'test-results/mca-desktop.png',fullPage:true,animations:'disabled'});
 
 const mobile=await newPage('index.html',390,844,true);
 await mobile.waitForTimeout(3400);
+await mobile.screenshot({path:'test-results/mca-mobile-first-impression.png',fullPage:false,animations:'disabled'});
 await check('Móvil: menú funciona y navegación interna',async()=>{
  await mobile.locator('#menuToggle').click();
  assert.equal(await mobile.locator('#menuToggle').getAttribute('aria-expanded'),'true');
@@ -129,6 +132,10 @@ await check('Móvil: sin scroll lateral 320, 390, 768, 1440',async()=>{
  }
  await mobile.setViewportSize({width:390,height:844});
 });
+await check('La imagen de portada se renderiza sin enlaces rotos',async()=>{
+ const img=await home.locator('.hero-media img').evaluate(el=>({loaded:el.complete&&el.naturalWidth>0,src:el.getAttribute('src')}));
+ assert.ok(img.loaded,JSON.stringify(img));
+});
 await check('Fotografías críticas disponibles desde el propio repositorio',async()=>{
  for(const src of ['assets/media/industrial-detail.jpg','assets/media/park-parana.jpg','assets/media/smart-people.jpg','assets/media/smart-machinery.jpg']){
   const response=await mobile.request.get(origin+src);assert.equal(response.status(),200,src);assert.ok(Number(response.headers()['content-length']||0)>3000,src);
@@ -137,7 +144,8 @@ await check('Fotografías críticas disponibles desde el propio repositorio',asy
 await check('Sin errores de JavaScript',async()=>assert.deepEqual(pageErrors,[]));
 await mobile.goto(origin+'index.html',{waitUntil:'domcontentloaded'});
 await mobile.waitForTimeout(3400);
-await mobile.evaluate(async()=>{for(let y=0;y<document.documentElement.scrollHeight;y+=430){scrollTo(0,y);await new Promise(r=>setTimeout(r,34))}scrollTo(0,0)});
+await mobile.evaluate(async()=>{for(let y=0;y<document.documentElement.scrollHeight;y+=430){scrollTo(0,y);await new Promise(r=>setTimeout(r,34))}scrollTo({top:0,behavior:'instant'})});
+await mobile.waitForTimeout(450);
 await mobile.screenshot({path:'test-results/mca-mobile.png',fullPage:true,animations:'disabled'});
 await smart.screenshot({path:'test-results/smart-desktop.png',fullPage:true,animations:'disabled'});
 await browser.close();
