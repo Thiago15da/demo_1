@@ -48,9 +48,9 @@ const projects=await newPage('proyectos.html');
 await check('Proyectos: catálogo JSON carga cuatro proyectos reales publicados',async()=>{
  await projects.locator('.project-card').first().waitFor({timeout:12000});
  assert.equal(await projects.locator('.project-card').count(),4);
- assert.match(await projects.locator('#projectsGrid').innerText(),/Parque Industrial y Logístico Paraná/);
- assert.match(await projects.locator('#projectsGrid').innerText(),/Galpones industriales en Luque/);
- assert.match(await projects.locator('#projectsGrid').innerText(),/Centro logístico MRA/);
+ assert.match(await projects.locator('#projectsGrid').innerText(),/Parque Industrial y Logístico Paraná/i);
+ assert.match(await projects.locator('#projectsGrid').innerText(),/Galpones industriales en Luque/i);
+ assert.match(await projects.locator('#projectsGrid').innerText(),/Centro logístico MRA/i);
 });
 await check('Proyectos: filtrado por categoría',async()=>{
  await projects.locator('[data-filter="industrial"]').click();
@@ -62,7 +62,7 @@ await check('Proyectos: filtrado por categoría',async()=>{
 await check('Proyectos: ficha y fuente abren y cierran',async()=>{
  await projects.locator('.project-info button').first().click();
  assert.equal(await projects.locator('#projectModal').getAttribute('aria-hidden'),'false');
- assert.match(await projects.locator('#modalTitle').innerText(),/Paraná/);
+ assert.match(await projects.locator('#modalTitle').innerText(),/Paraná/i);
  assert.match(await projects.locator('#modalArea').innerText(),/30.000 m²/);
  assert.match(await projects.locator('#modalSource').getAttribute('href'),/mcaconstructora.com/);
  await projects.keyboard.press('Escape');
@@ -73,7 +73,7 @@ await check('Servicios Smart: identidad diferenciada y seis capacidades',async()
  assert.match(await smart.locator('h1').innerText(),/operación/i);
  assert.equal(await smart.locator('.smart-feature').count(),6);
  assert.match(await smart.locator('.header .brand-name').innerText(),/SMART/);
- assert.match(await smart.locator('body').innerText(),/Mantenimiento industrial/);
+ assert.match(await smart.locator('body').innerText(),/Mantenimiento industrial/i);
 });
 const contact=await newPage('contacto.html?tipo=inversion');
 await check('Contacto: inversión activa campos específicos',async()=>{
