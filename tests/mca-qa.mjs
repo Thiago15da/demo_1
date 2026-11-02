@@ -173,6 +173,20 @@ await check('Portada y fichas usan fotografías locales que cargan',async()=>{
   assert.ok(await el.evaluate(img=>img.complete&&img.naturalWidth>0),'Imagen sin cargar: '+sel);
  }
 });
+await check('Todas las fotografías del portafolio y Smart se muestran sin recuadros vacíos',async()=>{
+ for(const [page,selector] of [[home,'.project-card img'],[projects,'.project-card img'],[smart,'.smart-showcase-photo img']]){
+  if(page===home)await home.goto(origin+'index.html',{waitUntil:'domcontentloaded'});
+  await page.locator(selector).first().waitFor({timeout:10000});
+  const images=page.locator(selector);
+  for(let i=0;i<await images.count();i++){
+    const el=images.nth(i);
+    await el.scrollIntoViewIfNeeded();
+    await el.evaluate(img=>img.decode().catch(()=>{}));
+    const info=await el.evaluate(img=>({loaded:img.complete&&img.naturalWidth>0,src:img.getAttribute('src')}));
+    assert.ok(info.loaded,JSON.stringify(info));
+  }
+ }
+});
 await check('Sin errores de JavaScript',async()=>assert.deepEqual(pageErrors,[]));
 await mobile.goto(origin+'index.html',{waitUntil:'domcontentloaded'});
 await mobile.waitForTimeout(3400);
