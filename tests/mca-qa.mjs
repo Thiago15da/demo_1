@@ -141,6 +141,38 @@ await check('Fotografías críticas disponibles desde el propio repositorio',asy
   const response=await mobile.request.get(origin+src);assert.equal(response.status(),200,src);assert.ok(Number(response.headers()['content-length']||0)>3000,src);
  }
 });
+await check('Ninguna página desborda o recorta sus títulos de 320 a 1600 px',async()=>{
+ for(const slug of ['index.html','parques-industriales.html','proyectos.html','servicios-smart.html','contacto.html']){
+  const page=await newPage(slug,390,820);
+  await page.waitForTimeout(180);
+  for(const width of [320,390,768,1024,1440,1600]){
+   await page.setViewportSize({width,height:880});
+   const x=await page.evaluate(()=>{
+    const headings=[...document.querySelectorAll('h1,h2,h3')].filter(el=>{
+      const s=getComputedStyle(el),r=el.getBoundingClientRect();return s.display!=='none'&&s.visibility!=='hidden'&&r.height>0;
+    });
+    return {vw:innerWidth,doc:document.documentElement.scrollWidth,headings:headings.map(el=>{const r=el.getBoundingClientRect();const parent=el.parentElement.getBoundingClientRect();return {label:el.innerText.slice(0,28),x:r.x,right:r.right,client:el.clientWidth,scroll:el.scrollWidth,parentWidth:parent.width}}),brand:document.querySelector('.header .brand-asset')?.getBoundingClientRect().width,opening:document.querySelectorAll('#opening').length};
+   });
+   assert.ok(x.doc<=x.vw+2,slug+' '+width+'px: scroll '+JSON.stringify(x));
+   assert.equal(x.opening,0,slug+' intro overlay');
+   if(slug!=='servicios-smart.html')assert.ok(x.brand>30&&x.brand<=95,slug+' logo demasiado grande: '+x.brand);
+   for(const h of x.headings){
+    assert.ok(h.x>=-3&&h.right<=width+3,slug+' '+width+' título fuera del viewport: '+JSON.stringify(h));
+    assert.ok(h.scroll<=h.client+4,slug+' '+width+' título recortado: '+JSON.stringify(h));
+   }
+  }
+  await page.close();
+ }
+});
+await check('Portada y fichas usan fotografías locales que cargan',async()=>{
+ await home.goto(origin+'index.html',{waitUntil:'domcontentloaded'});
+ await home.locator('.project-card').first().waitFor();
+ for(const sel of ['.header .brand-asset','.hero-media img','.park-feature-media img','.smart-showcase-photo img','.project-card img']){
+  const el=home.locator(sel).first();await el.scrollIntoViewIfNeeded();
+  await el.evaluate(img=>img.decode().catch(()=>{}));
+  assert.ok(await el.evaluate(img=>img.complete&&img.naturalWidth>0),'Imagen sin cargar: '+sel);
+ }
+});
 await check('Sin errores de JavaScript',async()=>assert.deepEqual(pageErrors,[]));
 await mobile.goto(origin+'index.html',{waitUntil:'domcontentloaded'});
 await mobile.waitForTimeout(3400);
