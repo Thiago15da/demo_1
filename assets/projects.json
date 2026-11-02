@@ -1,0 +1,82 @@
+{
+  "lastReviewed": "2026-11-02",
+  "disclaimer": "Las superficies corresponden a las referencias publicadas en la web original de MCA. Etapas, disponibilidad, ubicación exacta, participación y fichas técnicas deben ser validadas por la empresa.",
+  "projects": [
+    {
+      "id": "parana",
+      "title": "Parque Industrial y Logístico Paraná",
+      "category": "parques",
+      "categoryLabel": "Parques industriales",
+      "location": "Paraguay · ubicación a confirmar",
+      "area": "30.000 m²",
+      "description": "El sitio actual de MCA presenta una superficie de 30.000 m² destinada al desarrollo de proyectos industriales y menciona infraestructura de agua, energía y conectividad.",
+      "scope": [
+        "Desarrollo de suelo industrial",
+        "Servicios para implantación industrial",
+        "Infraestructura y coordinación de proyectos"
+      ],
+      "status": "Etapa y disponibilidad por confirmar",
+      "image": "https://static.wixstatic.com/media/9d7382_07659245b25547328bdb84282cca1b8a~mv2.jpg",
+      "fallback": "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1200&q=85",
+      "imageCredit": "Material publicado en el sitio actual de MCA",
+      "source": "https://www.mcaconstructora.com/parqueindustrialparana"
+    },
+    {
+      "id": "luque",
+      "title": "Galpones industriales en Luque",
+      "category": "industrial",
+      "categoryLabel": "Infraestructura industrial",
+      "location": "Luque, Paraguay",
+      "area": "3.500 m²",
+      "description": "Proyecto de galpones industriales de 3.500 m² presentado por MCA como infraestructura adaptable para operaciones industriales y de maquila.",
+      "scope": [
+        "Desarrollo de galpones industriales",
+        "Planificación de espacios productivos",
+        "Infraestructura de servicios"
+      ],
+      "status": "Etapa de ejecución por confirmar",
+      "image": "https://static.wixstatic.com/media/9d7382_07659245b25547328bdb84282cca1b8a~mv2.jpg",
+      "fallback": "https://images.unsplash.com/photo-1565793298595-6ba897a9b3ea?auto=format&fit=crop&w=1200&q=85",
+      "imageCredit": "Referencia visual; material del sitio original sujeto a validación",
+      "source": "https://www.mcaconstructora.com/galponesluque"
+    },
+    {
+      "id": "mra",
+      "title": "Centro logístico MRA",
+      "category": "logistica",
+      "categoryLabel": "Infraestructura logística",
+      "location": "Mariano Roque Alonso, Paraguay",
+      "area": "1.600 m²",
+      "description": "Centro logístico de 1.600 m² de galpones con oficinas corporativas, en un entorno próximo a conexiones portuarias, según el sitio de MCA.",
+      "scope": [
+        "Infraestructura logística",
+        "Galpones y espacios corporativos",
+        "Proyecto integral de inmuebles operativos"
+      ],
+      "status": "Etapa de ejecución por confirmar",
+      "image": "https://static.wixstatic.com/media/9d7382_6fb1296cad4e4e3b8e2ddb9572bf21cf~mv2.jpg",
+      "fallback": "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1200&q=85",
+      "imageCredit": "Material identificado en la web actual de MCA",
+      "source": "https://www.mcaconstructora.com/services"
+    },
+    {
+      "id": "planta",
+      "title": "Planta industrial",
+      "category": "industrial",
+      "categoryLabel": "Construcción industrial",
+      "location": "Paraguay · ubicación por confirmar",
+      "area": "1.620 m²",
+      "description": "MCA publica como antecedente la construcción de una planta industrial de 1.620 m² en su actual sección de servicios.",
+      "scope": [
+        "Construcción de planta industrial",
+        "Ejecución de infraestructura productiva",
+        "Integración de disciplinas de obra"
+      ],
+      "status": "Alcance y etapa por confirmar",
+      "image": "https://static.wixstatic.com/media/9d7382_6fb1296cad4e4e3b8e2ddb9572bf21cf~mv2.jpg",
+      "fallback": "https://images.unsplash.com/photo-1565793298595-6ba897a9b3ea?auto=format&fit=crop&w=1200&q=85",
+      "imageCredit": "Fotografía referencial o publicada, confirmar correspondencia",
+      "source": "https://www.mcaconstructora.com/services"
+    }
+  ]
+}
