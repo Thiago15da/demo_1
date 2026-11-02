@@ -456,3 +456,7 @@ body[data-page="proyectos"] .project-info>button:after{content:"";display:none}
 .origin-logo img{height:43px;width:auto;max-width:129px;object-fit:contain}
 .origin-logo span{font:500 9px/1.75 var(--mono);letter-spacing:.04em;text-transform:uppercase;color:#798b8a}
 @media(max-width:520px){.origin-logo img{height:31px;max-width:94px}.origin-logo span{font-size:8px}}
+
+/* Editorial mobile opening: reveal photography in the first viewport instead of presenting a wall of text. */
+@media(max-width:750px){.hero-copy{min-height:0;padding-top:50px;padding-bottom:33px}.hero-aside{display:none}.hero h1{margin:20px 0 17px}.hero-media{height:445px}}
+@media(max-width:520px){.hero{padding-top:78px}.hero-copy{padding:35px 17px 27px;min-height:0}.hero h1{font-size:clamp(51px,12.5vw,66px);line-height:1.025;letter-spacing:-.08em;margin:20px 0 16px}.hero-description{font-size:13px;line-height:1.72;margin:0}.hero-actions{margin-top:16px;gap:14px}.hero-actions .btn{min-height:49px}.hero-actions .text-cta{padding:5px 0 7px}.hero-media{height:405px}}
