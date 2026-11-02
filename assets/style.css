@@ -314,3 +314,4 @@ a{color:inherit;text-decoration:none}button,input,select,textarea{font:inherit}b
  html{scroll-behavior:auto}*,*:before,*:after{animation-duration:.001ms!important;animation-delay:0ms!important;transition-duration:.001ms!important}
  #opening{display:none!important}.reveal,.hero-tag,.hero h1,.hero-description,.hero-actions{opacity:1!important;transform:none!important}
 }
+.field[hidden]{display:none!important}
