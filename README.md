@@ -1,61 +1,47 @@
-# MCA Constructora & Servicios Smart — propuesta digital empresarial
-**NovaTec Engineering · Concepto para evaluación comercial · 2 de noviembre de 2026**
+# Grupo Empresarial — demostración institucional
 
-Este repositorio contiene dos experiencias institucionales coherentes, desarrolladas como prototipo navegable y **no como sitio oficial**.
+Demo multipágina para GR Vallados, Del Sol Ingeniería S.A., Del Sol Constructora y Eco Asfalto S.A. Denominación e identidad del grupo provisionales.
 
-## Direcciones
-- `index.html`: MCA — desarrollo industrial, parques industriales e infraestructura.
-- `parques-industriales.html`: vertical de parques y simulador interactivo de plan maestro. **No representa lotes reales, disponibilidad ni superficies verificadas.**
-- `proyectos.html`: catálogo y fichas filtrables con antecedentes publicados.
-- `servicios-smart.html`: presentación comercial independiente de Servicios Smart, complementaria a MCA.
-- `contacto.html`: formulario comercial diferenciado para inversiones, proyectos industriales, ingeniería, montajes y mantenimiento.
+## Desarrollo
 
-## Dirección de arte v2 (2026-11-02)
+React 19 + Vite 6 + TypeScript. Ocho entradas HTML reales: las páginas se pueden abrir y actualizar directamente en GitHub Pages sin redirecciones 404 ni enrutamiento simulado.
 
-- Diseño institucional editorial propio para MCA: marfil mineral, azul pizarra, cobre y tipografía Manrope / Instrument Serif. Se prioriza la calidad de composición y casos industriales en lugar de módulos de plantilla.
-- Servicios Smart conserva un tratamiento técnico diferenciado (azul profundo y verde marino).
-- Se incorpora el logotipo **original publicado por MCA** como referencia explícita de identidad en la propuesta (no se afirma que el concepto nuevo esté aprobado).
-- Fotografías críticas empaquetadas en `assets/media/` para evitar dependencias externas; el único archivo de proyecto atribuido directamente a MCA es `assets/media/park-parana.jpg`. Las demás fotografías de Unsplash se presentan como ilustrativas, no como trabajos MCA.
-- La página puede mostrarse incluso si no se ejecutan las animaciones; el contenido no queda oculto durante desplazamientos.
+```sh
+npm ci
+npm run dev
+npm run build
+npm run check:dist
+```
 
-## Funcionalidad de demostración
-- Navegación sencilla y encabezado fijo en el flujo de la página; sin animación de entrada ni logotipo sobredimensionado.
-- Catálogo de proyectos editable mediante `assets/projects.json`.
-- Masterplan ilustrativo interactivo con 6 sectores ficticios y selección accesible por teclado.
-- Formularios comerciales sin backend: los botones preparan mensajes por WhatsApp (`+595981876316`) y correo (`camaidana@mcapy.solutions`) en el equipo del usuario. **No se envían automáticamente ni se guardan datos.**
-- Fichas de proyectos modal, filtros y captura de pantalla automatizada.
-- Meta `noindex,nofollow` para evitar presentar la demo como un sitio institucional definitivo.
+Ruta base: `/demo_1/`. Producción: `dist/`. El workflow `.github/workflows/deploy.yml` compila, comprueba recursos y publica con GitHub Pages. En Settings → Pages debe seleccionarse GitHub Actions como origen.
 
-## Fuentes verificadas
-- [Web actual MCA — inicio](https://www.mcaconstructora.com/): mención a construcción industrial, parques industriales, media y baja tensión, tableros, y proyectos en localidades de Paraguay.
-- [MCA — servicios](https://www.mcaconstructora.com/services): **Planta industrial (1.620 m²)** y **Centro logístico MRA (1.600 m²)**. Se los muestra como antecedentes publicados; no se inventan estado ni cliente final.
-- [MCA — Parque Industrial y Logístico Paraná](https://www.mcaconstructora.com/parqueindustrialparana): **30.000 m²**, infraestructura industrial y servicios divulgados en el sitio de origen. Disponibilidad y etapa requieren validación.
-- [MCA — Galpones Luque](https://www.mcaconstructora.com/galponesluque): **3.500 m²** según página actual.
-- [MCA — Contacto](https://www.mcaconstructora.com/contact): **+595981876316**, correo **camaidana@mcapy.solutions**, dirección **San Francisco 1131 c/ Concordia, Asunción**.
-- Servicios Smart y el nuevo posicionamiento de MCA proceden directamente del documento de requerimientos que compartió el usuario. **No se han encontrado testimonios, portafolio Smart o datos de contacto independientes que permitan afirmar resultados, proyectos ejecutados o una unidad jurídica específica.**
+Componentes compartidos: `src/components.tsx`. Páginas: `src/pages/`. Información empresarial: `src/data.ts`. Cada empresa tiene su URL y su metadata HTML propia.
 
-Imágenes: el medio de `Parque Paraná` y el logo actual proceden de la web pública MCA; las fotografías de los demás casos proceden de **Unsplash** como material de referencia. Los recursos están empaquetados localmente. Antes de publicar oficialmente, confirmar licencias, fotografías auténticas, etapas, superficies, logos y permisos para reutilizar imágenes.
+## Páginas
 
-## Mantenimiento y carga de proyectos
-Editar `assets/projects.json`: cada objeto contiene `title`, `category`, `location`, `area`, `description`, `scope`, `status`, `image`, `fallback`, `source`. La interfaz consulta automáticamente este archivo cuando se abre `proyectos.html` o `index.html`.
-Para el sitio real se podría integrar un CMS (Decap CMS, Sanity u otro), con aprobación de usuario, roles y flujos de publicación. El prototipo no incorpora sistema de edición visual ni base de datos.
+- Inicio: `/demo_1/`
+- El Grupo: `grupo.html`
+- Empresas: `empresas.html`
+- GR Vallados: `gr-vallados.html`
+- Del Sol Ingeniería S.A.: `del-sol-ingenieria.html`
+- Del Sol Constructora: `del-sol-constructora.html`
+- Eco Asfalto S.A.: `eco-asfalto.html`
+- Contacto: `contacto.html`
 
-## Pendiente para la propuesta formal / producción
-1. Aprobar identidad de MCA y Servicios Smart, logotipos y tonalidades.
-2. Recibir planos, fotografías, videos, memorias técnicas y estados reales para cada proyecto.
-3. Definir qué unidades son marcas comerciales y quién recibirá las consultas de Servicios Smart.
-4. Activar formularios de envío real y correo corporativo usando infraestructura segura, con controles anti-spam y política de privacidad.
-5. Confirmar dominio y hosting para cada marca; establecer condiciones de mantenimiento, seguridad y edición de contenidos.
-6. Completar SEO corporativo (datos estructurados, sitemap, Search Console y páginas oficiales) **después de aprobar el contenido y dominio**.
+## Contacto y alcance
 
-## Pruebas
-La acción `.github/workflows/mca-qa.yml` ejecuta Playwright Chromium: navegación, formularios, modal, filtros, mapa interactivo, escritorio y celular. Publica capturas de las páginas en artefactos. GitHub Pages sirve archivos estáticos desde `main`.
+El selector distingue a las cuatro empresas. La herramienta de redacción solo prepara/copia texto localmente; no envía, almacena ni registra información. Para Ingeniería se ofrece un enlace `mailto:` al correo publicado; para Ingeniería y Constructora, `tel:` al teléfono de directorios públicos. No se presume disponibilidad de WhatsApp. GR Vallados y Eco Asfalto no tienen canal directo confirmado en esta demo.
 
-## Resguardo
-La demo anterior del Centro Educativo de las Américas se preserva en la rama `backup/cela-before-mca-2026-11-02`.
+No incluye sistemas administrativos, formularios con recepción, servicios pagos, analítica, cookies de seguimiento ni claves privadas. No hay precios comerciales dentro de la web. Se utiliza `noindex,nofollow` para mantener la demostración pública fuera de la indexación solicitada a buscadores; no es una medida de privacidad.
 
-## Corrección de coherencia visual — 2 de noviembre de 2026
+## Investigación y confirmaciones
 
-La revisión de diseño redujo el sistema a **una familia tipográfica principal**, colores corporativos sobrios, grillas simples, espacios y tamaños consistentes, imágenes sin carga diferida en el portafolio y **logotipo original MCA pequeño** en el encabezado. Se eliminaron las cortinas de entrada y los grandes títulos decorativos que generaban problemas de superposición.
+Ver `INVESTIGACION.md`. Ninguna imagen se presenta como obra propia. No se inventaron logos oficiales, certificaciones, clientes, cifras ni historia empresarial. La relación entre las cuatro empresas proviene del encargo del cliente y debe aprobarse junto con el nombre institucional definitivo.
 
-La publicación añade un identificador de versión a CSS y JavaScript para evitar que el navegador mezcle el HTML nuevo con estilos antiguos almacenados en caché. Se comprobaron las cinco páginas en anchos de 320, 390, 768, 1024, 1440 y 1600 píxeles, además de la navegación, filtros, masterplan y enlaces comerciales.
+## Material visual
+
+`public/images/` contiene imágenes ilustrativas generadas para esta demostración, optimizadas en WebP a 800 y 1600 px. No son fotos documentales de las empresas. No hay marcas de terceros ni edificios identificables. Los nombres se muestran con tipografía editorial provisional, no con logos supuestamente oficiales.
+
+Prompts y procedencia en `ASSETS.md`. Tipografía Geist (SIL OFL, Vercel) e Instrument Serif (SIL OFL, Instrument) alojadas localmente; licencias en `public/fonts/`.
+
+Antes de una publicación definitiva, Rubén debe aprobar razón y nombre del grupo, logos, colores, servicios por empresa, contactos, permisos de fotos, textos e información legal. La página de Eco Asfalto tiene contenido referencial hasta verificar la identidad de la empresa correcta.
